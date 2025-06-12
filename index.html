@@ -10,6 +10,10 @@
       body {
         /* ganti background website */
         background-image: url(https://plus.unsplash.com/premium_photo-1671493286983-801d06993213?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
       }
     </style>
     <link
@@ -20,37 +24,38 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   </head>
 
-  <body class="justify-center flex">
+  <body class="flex items-center justify-center p-4">
     <main
-      class="bg-white rounded mt-24 p-8 shadow-lg shadow-red-200 animate__animated animate__backInDown"
+      class="bg-white rounded-lg mt-8 md:mt-24 p-4 md:p-8 shadow-lg shadow-red-200 animate__animated animate__backInDown w-full max-w-md mx-auto"
     >
       <!-- ganti gambar awal -->
-      <img
-        class="cat-img"
-        src="https://www.icegif.com/wp-content/uploads/2023/05/icegif-190.gif"
-        alt="Picture of a cat"
-        width="200"
-      />
+      <div class="flex justify-center">
+        <img
+          class="cat-img w-40 md:w-48 mx-auto"
+          src="https://www.icegif.com/wp-content/uploads/2023/05/icegif-190.gif"
+          alt="Picture of a cat"
+        />
+      </div>
       <div class="border-b mt-2 border-2"></div>
-      <div class="lh-1 text-center mt-4">
+      <div class="text-center mt-4">
         <!-- ganti nama -->
-        <h2 class="title text-red-400 text-xl font-semibold">
+        <h2 class="title text-red-400 text-lg md:text-xl font-semibold">
           Hi, wanna go on a date?,
         </h2>
         <!-- ganti pertanyaan -->
-        <p class="title question fs-1 text-2xl font-bold text-gray-700">*blush</p>
+        <p class="title question text-xl md:text-2xl font-bold text-gray-700">*blush</p>
       </div>
-      <div class="buttons mt-5 flex justify-around">
+      <div class="buttons mt-5 flex justify-around space-x-4">
         <!-- ganti tulisan tombol -->
         <button
           type="button"
-          class="btn-yes bg-green-500 rounded text-white text-3xl px-2 pt-1 pb-2 animate__pulse animate__animated animate__infinite"
+          class="btn-yes bg-green-500 rounded text-white text-2xl md:text-3xl px-3 py-1 md:px-4 md:py-2 animate__pulse animate__animated animate__infinite w-full"
         >
           yes
         </button>
         <button
           type="button"
-          class="btn-no bg-red-500 rounded text-white text-2xl px-2 pt-1 pb-2"
+          class="btn-no bg-red-500 rounded text-white text-xl md:text-2xl px-3 py-1 md:px-4 md:py-2 w-full"
         >
           no
         </button>
@@ -60,7 +65,7 @@
         <a
           href="https://wa.me/6281290657960"
           type="button"
-          class="bg-green-500 text-white py-1 px-2 rounded btn-yes w-100 text-xl font-bold"
+          class="bg-green-500 text-white py-2 px-4 rounded btn-yes w-full text-lg md:text-xl font-bold text-center"
         >
           <!-- ganti tulisan tombol link -->
           💌 Click to Message Me!</a
@@ -106,8 +111,22 @@
           const imageIndex = Math.min(count, MAX_IMAGES);
           changeImage(imageIndex);
           updateNoButtonText();
+          
+          // Jika sudah mencapai pesan terakhir ("<--")
           if (count === MAX_IMAGES) {
             play = false;
+            // Tambahkan event listener untuk mengubah tombol yes saat diklik
+            noButton.addEventListener("click", function finalClick() {
+              // Ubah teks tombol yes
+              yesButton.textContent = "told u, just click yes";
+              // Perbesar sedikit tombol yes
+              yesButton.classList.remove("text-2xl", "md:text-3xl");
+              yesButton.classList.add("text-xl", "md:text-2xl");
+              // Sembunyikan tombol no
+              noButton.classList.add("hidden");
+              // Hapus event listener setelah digunakan
+              noButton.removeEventListener("click", finalClick);
+            }, { once: true });
           }
         }
       });
@@ -156,7 +175,7 @@
 
       // ganti kata-kata kalo ditolak
       function generateMessage(count) {
-        const messages = ["no", "u sure?", "think abt it", "click yes", "huftt..", "<--"];
+        const messages = ["no", "u sure?", "think abt it", "click yes", "huftt..", "u can't reject me"];
 
         const messageIndex = Math.min(count, messages.length - 1);
         return messages[messageIndex];
